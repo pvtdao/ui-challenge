@@ -1,0 +1,24 @@
+@tailwind components;
+
+.line-after:after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 15px;
+    background: transparent;
+    right: -25px;
+    top: 100%;
+}
+
+@layer components {
+    .menu-mobile {
+        @apply bg-white w-full top-[-100px] -z-10;
+        transition: top .3s linear 0s;
+    }
+
+    .menu-mobile.active {
+        top: 110%;
+        transition: top .3s linear 0s;
+
+    }
+}

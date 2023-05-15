@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from 'react-router-dom'
+import './App.css'
+import { initiateAxios } from './api/initAxios'
+import Footer from './components/Footer'
+import Header from './components/Header'
+import LoginPage from './features/Auth/Login'
+import RegisterPage from './features/Auth/Register'
+
+initiateAxios()
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<div className='App'>
+			<Header />
+			<div className='mt-16'>
+				<Routes>
+					<Route path='/register' element={<RegisterPage />} />
+					<Route path='/login' element={<LoginPage />} />
+				</Routes>
+			</div>
+			<Footer />
+		</div>
+	)
 }
 
-export default App;
+export default App
