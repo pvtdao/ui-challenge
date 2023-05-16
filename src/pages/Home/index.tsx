@@ -10,6 +10,7 @@ function HomePage() {
 					<li>LocalStorage cho việc lưu tạm dữ liệu</li>
 					<li>Typescritp cho việc viết code nghiêm ngặt hơn</li>
 					<li>React hook form cho việc handle các form</li>
+					<li>React dnd cho việc kéo thả các item articles</li>
 				</ul>
 			</div>
 			<div className='mt-10'>
@@ -19,6 +20,7 @@ function HomePage() {
 					<li>CRUD Articles</li>
 					<li>CRUD Comments (Update comments em không thấy có api ạ)</li>
 					<li>Auth: Bao gồm Register, Login, Logout, Procted route</li>
+					<li>Kéo thả giữa các item articles</li>
 				</ul>
 			</div>
 		</div>
