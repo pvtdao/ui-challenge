@@ -31,11 +31,9 @@ function LoginPage() {
 	})
 
 	async function handleSubmit(values: UserLogin) {
-		console.log(values)
 		try {
 			const action = handleLogin(values)
 			const resultLogin = await dispatch(action)
-			// Dùng unwrapResult để lấy kết quả
 			const user = unwrapResult(resultLogin)
 
 			localStorage.setItem('guestToken', user.token)

@@ -49,7 +49,6 @@ function CreateArticle({ dataArticle }: CreateArticlePropsType) {
 	const watchTagList = methods.watch('tagList')
 
 	async function handleSubmit(values: CreateArticleSchema) {
-		console.log(values)
 		try {
 			if (!dataArticle) {
 				await createArticle(values)

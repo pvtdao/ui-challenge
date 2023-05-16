@@ -41,14 +41,11 @@ function RegisterPage() {
 	})
 
 	async function handleSubmit(values: UserRegister) {
-		console.log(values)
 		try {
 			const action = handleRegister(values)
 			const resultRegister = await dispatch(action)
 
-			// Dùng unwrapResult để lấy kết quả
 			const user = unwrapResult(resultRegister)
-			console.log('🚀 ~ file: Register.tsx:52 ~ handleSubmit ~ user:', user)
 			navigate('/login')
 		} catch (error) {
 			console.error('Fail to register: ', error)

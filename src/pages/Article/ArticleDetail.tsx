@@ -43,7 +43,6 @@ function ArticleDetail() {
 		if (!slug || slug === 'new') return
 		try {
 			const res = await getArticleBySlug(slug)
-			console.log('🚀 ~ file: ArticleDetail.tsx:43 ~ fetchArticle ~ res:', res)
 			setArticle(res.article)
 			setComments(res.article.comments)
 		} catch (error) {
@@ -66,7 +65,6 @@ function ArticleDetail() {
 	}, [slug])
 
 	async function handleAddComment(values: { body: string }) {
-		console.log(values)
 		if (!slug || slug === 'new') return
 		try {
 			const rs = await createComment(slug, values)
@@ -99,7 +97,6 @@ function ArticleDetail() {
 		}
 	}
 
-	console.log(comments)
 	return (
 		<section className='mx-auto container px-2 sm:px-6 lg:px-8 mt-20 md:mt-32 min-h-[60vh] pb-32'>
 			{slug === 'new' || pathname.includes('/update') ? (
