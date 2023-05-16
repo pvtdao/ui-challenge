@@ -6,6 +6,8 @@ import Header from './components/Header'
 import ProtectedRoute from './components/ProtectedRoute'
 import LoginPage from './features/Auth/Login'
 import RegisterPage from './features/Auth/Register'
+import ArticlePage from './pages/Article'
+import ArticleDetail from './pages/Article/ArticleDetail'
 import UserPage from './pages/User'
 import UserDetailPage from './pages/User/UserDetail'
 import UserEditPage from './pages/User/UserEdit'
@@ -58,6 +60,23 @@ function App() {
 							</ProtectedRoute>
 						}
 					/>
+					<Route
+						path='/articles/:slug'
+						element={
+							<ProtectedRoute>
+								<ArticleDetail />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path='/articles/:slug/update'
+						element={
+							<ProtectedRoute>
+								<ArticleDetail />
+							</ProtectedRoute>
+						}
+					/>
+					<Route path='/articles' element={<ArticlePage />} />
 				</Routes>
 			</div>
 			<Footer />

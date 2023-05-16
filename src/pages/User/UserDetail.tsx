@@ -13,16 +13,11 @@ function UserDetailPage() {
 	const params = useParams()
 	const { username } = params
 	const [user, setUser] = useState<UserDetailSchema>()
-	console.log('🚀 ~ file: UserDetail.tsx:19 ~ UserDetailPage ~ user:', user)
 
 	async function fetchUserDetail() {
 		if (!username) return
 		try {
 			const data = await getDetailByUsername(username)
-			console.log(
-				'🚀 ~ file: UserDetail.tsx:15 ~ fetchUserDetail ~ data:',
-				data
-			)
 			setUser(data.profile)
 		} catch (error) {
 			console.error('Failed to fetch user detail: ', error)
@@ -37,7 +32,7 @@ function UserDetailPage() {
 		<div className='mx-auto container px-2 sm:px-6 lg:px-8 mt-32 min-h-[60vh]'>
 			{user ? (
 				<div className='flex flex-col md:flex-row gap-10'>
-					<div className='md:max-w-[300px] flex flex-col justify-center items-center self-start'>
+					<div className='w-full md:max-w-[300px] flex flex-col justify-center items-center self-start'>
 						<div className='rounded-full w-[120px] h-[120px]'>
 							<img
 								className='rounded-full'

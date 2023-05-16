@@ -35,7 +35,7 @@ function UserEditPage() {
 
 	async function handleEditUser(values: UserUpdateSchema) {
 		try {
-			const response = await editUser(values)
+			await editUser(values)
 
 			const action = setUser({ ...user.current, ...values })
 			dispatch(action)
@@ -44,11 +44,10 @@ function UserEditPage() {
 				'@user',
 				JSON.stringify({ ...user.current, ...values })
 			)
-			navigate(-1)
+			navigate('/users')
 		} catch (error) {
 			console.error('Failed to update user: ', error)
 		}
-		console.log(values)
 	}
 
 	function handleChangeImage(e: any) {

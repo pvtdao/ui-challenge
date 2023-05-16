@@ -102,10 +102,14 @@ function Header() {
 						<div className='hidden sm:ml-6 sm:flex flex-1 justify-center'>
 							<div className='flex items-center  space-x-4'>
 								{navigation.map((item, idx) => {
+									const isActive =
+										item.href === '/'
+											? location.pathname === item.href
+											: location.pathname.includes(item.href)
 									return (
 										<Link
 											className={`${
-												location.pathname === item.href
+												isActive
 													? 'bg-primary text-white'
 													: 'hover:bg-primary/50 hover:text-black/50'
 											} px-4 py-1 rounded-md `}
