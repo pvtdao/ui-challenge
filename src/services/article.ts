@@ -34,3 +34,31 @@ export const createArticle = async (payload: CreateArticle) => {
 export const deleteArticleBySlug = async (slug: string) => {
 	return axios.delete(`${endpoint}/${slug}`)
 }
+
+export const createComment = async (
+	slug: string,
+	payload: { body: string }
+): Promise<{ article: ArticelSchema }> => {
+	return axios
+		.post(`${endpoint}/${slug}/comments`, payload)
+		.then((res) => res.data)
+}
+
+export const deleteCommentById = async (
+	slug: string,
+	id: number
+): Promise<{ article: ArticelSchema }> => {
+	return axios
+		.delete(`${endpoint}/${slug}/comments/${id}`)
+		.then((res) => res.data)
+}
+
+export const updateCommentById = async (
+	slug: string,
+	id: number,
+	payload: { body: string }
+): Promise<{ article: ArticelSchema }> => {
+	return axios
+		.put(`${endpoint}/${slug}/comments/${id}`, payload)
+		.then((res) => res.data)
+}

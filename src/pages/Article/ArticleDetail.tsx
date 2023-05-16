@@ -1,10 +1,21 @@
+import { yupResolver } from '@hookform/resolvers/yup'
 import { useEffect, useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import * as yup from 'yup'
 import { RootState } from '../../app/store'
 import Button from '../../components/common/Button'
-import { ArticelSchema } from '../../schema/article'
-import { deleteArticleBySlug, getArticleBySlug } from '../../services/article'
+import TextField from '../../components/hook-form/TextField'
+import { ArticelSchema, CommentSchema } from '../../schema/article'
+import {
+	createComment,
+	deleteArticleBySlug,
+	deleteCommentById,
+	getArticleBySlug,
+	updateCommentById
+} from '../../services/article'
+import CommentCard from './CommentCard'
 import CreateArticle from './CreateArticle'
 
 function ArticleDetail() {
@@ -16,12 +27,25 @@ function ArticleDetail() {
 	const user = useSelector((state: RootState) => state.user)
 
 	const [article, setArticle] = useState<ArticelSchema>()
+	const [comments, setComments] = useState<CommentSchema[]>([])
+	const schema = yup.object({
+		body: yup.string().required('Comment is required.')
+	})
+
+	const methods = useForm<{ body: string }>({
+		defaultValues: {
+			body: ''
+		},
+		resolver: yupResolver(schema)
+	})
 
 	async function fetchArticle() {
 		if (!slug || slug === 'new') return
 		try {
 			const res = await getArticleBySlug(slug)
+			console.log('🚀 ~ file: ArticleDetail.tsx:43 ~ fetchArticle ~ res:', res)
 			setArticle(res.article)
+			setComments(res.article.comments)
 		} catch (error) {
 			console.error('Failed to get detail article: ', error)
 		}
@@ -41,8 +65,43 @@ function ArticleDetail() {
 		fetchArticle()
 	}, [slug])
 
+	async function handleAddComment(values: { body: string }) {
+		console.log(values)
+		if (!slug || slug === 'new') return
+		try {
+			const rs = await createComment(slug, values)
+			setComments(rs.article.comments)
+			methods.reset({ body: '' })
+		} catch (error) {
+			console.error('Failed to create comment: ', error)
+		}
+	}
+
+	async function handleDeleteComment(id: number) {
+		if (!slug || slug === 'new') return
+
+		try {
+			const rs = await deleteCommentById(slug, id)
+			setComments(rs.article.comments)
+		} catch (error) {
+			console.error('Failed to delete comment: ', error)
+		}
+	}
+
+	async function handleUpdateComment(id: number, payload: { body: string }) {
+		if (!slug || slug === 'new') return
+
+		try {
+			const rs = await updateCommentById(slug, id, payload)
+			setComments(rs.article.comments)
+		} catch (error) {
+			console.error('Failed to delete comment: ', error)
+		}
+	}
+
+	console.log(comments)
 	return (
-		<section className='mx-auto container px-2 sm:px-6 lg:px-8 mt-20 md:mt-32 min-h-[60vh]'>
+		<section className='mx-auto container px-2 sm:px-6 lg:px-8 mt-20 md:mt-32 min-h-[60vh] pb-32'>
 			{slug === 'new' || pathname.includes('/update') ? (
 				<CreateArticle dataArticle={article} />
 			) : (
@@ -63,7 +122,7 @@ function ArticleDetail() {
 							</Button>
 						</div>
 					)}
-					<div className='md:mt-auto lg:pb-32'>
+					<div className='md:mt-auto lg:pb-10'>
 						<h1 className='text-left md:text-center font-bold text-xl'>
 							{article?.title}
 						</h1>
@@ -89,7 +148,52 @@ function ArticleDetail() {
 							})}
 						</div>
 					</div>
-					<div className=''>Comment</div>
+					<div className='mt-10'>
+						<h1 className='text-left text-xl font-medium'>Comments</h1>
+						{!comments || comments.length === 0 ? (
+							<p className='mt-1 '>Chưa có bình luận</p>
+						) : (
+							<div className='mt-5'>
+								{comments.map((cm) => {
+									return (
+										<CommentCard
+											key={cm.id}
+											comments={cm}
+											handleDeleteComment={(id: number) =>
+												handleDeleteComment(id)
+											}
+											handleUpdateComment={(
+												id: number,
+												payload: { body: string }
+											) => handleUpdateComment(id, payload)}
+										/>
+									)
+								})}
+							</div>
+						)}
+
+						{user.current !== null && (
+							<FormProvider {...methods}>
+								<form
+									className='mt-10'
+									onSubmit={methods.handleSubmit(handleAddComment)}
+								>
+									<div className='flex flex-col gap-1.5 w-full md:max-w-2xl'>
+										<label className='text-secondary' htmlFor='body'>
+											Add comment
+										</label>
+										<TextField name='body' id='body' />
+									</div>
+									<Button
+										type='submit'
+										className='text-sm rounded bg-black text-white py-2 px-3 mt-3'
+									>
+										Comment
+									</Button>
+								</form>
+							</FormProvider>
+						)}
+					</div>
 				</>
 			)}
 		</section>

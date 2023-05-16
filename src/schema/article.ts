@@ -10,6 +10,7 @@ export type ArticelSchema = {
 	updated: Date
 	tagList: string[]
 	favoriteCount: number
+	comments: CommentSchema[]
 	author: Pick<UserSchema, 'bio' | 'email' | 'id' | 'image' | 'username'>
 }
 
@@ -18,4 +19,10 @@ export type CreateArticle = {
 	description: string
 	body: string
 	tagList: string[]
+}
+
+export type CommentSchema = {
+	author: UserSchema
+	body: string
+	id: number
 }

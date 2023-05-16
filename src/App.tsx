@@ -8,6 +8,7 @@ import LoginPage from './features/Auth/Login'
 import RegisterPage from './features/Auth/Register'
 import ArticlePage from './pages/Article'
 import ArticleDetail from './pages/Article/ArticleDetail'
+import HomePage from './pages/Home'
 import UserPage from './pages/User'
 import UserDetailPage from './pages/User/UserDetail'
 import UserEditPage from './pages/User/UserEdit'
@@ -20,6 +21,7 @@ function App() {
 			<Header />
 			<div className='mt-16'>
 				<Routes>
+					<Route path='/' element={<HomePage />} />
 					<Route
 						path='/register'
 						element={
