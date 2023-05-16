@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { RootState } from '../../app/store'
 import avataPlaceholder from '../../asset/images/avatar-placeholder.png'
+import { logout } from '../../features/Auth/userSlice'
 
 function Header() {
 	const location = useLocation()
+	const navigate = useNavigate()
 	const [isOpen, setIsOpen] = useState(false)
+	const dispatch = useDispatch()
+	const user = useSelector((state: RootState) => state.user)
 
 	const navigation = [
 		{ name: 'Home', href: '/', current: true },
@@ -21,8 +27,17 @@ function Header() {
 	}
 
 	function handleCloseMenu() {
-		console.log('Voo')
 		setIsOpen(false)
+	}
+
+	function handleLogout() {
+		const action = logout()
+		dispatch(action)
+	}
+
+	function navigateLogin() {
+		if (user.current === null) navigate('/login')
+		return
 	}
 
 	return (
@@ -107,28 +122,32 @@ function Header() {
 					<div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:relative sm:inset-auto sm:ml-6 sm:pr-0'>
 						<div className='relative ml-3 group line-after'>
 							<div className=''>
-								<Link
-									to={'/register'}
+								<button
+									onClick={navigateLogin}
 									className='flex rounded-full bg-gray-800 text-sm'
 								>
 									<img
 										className='h-8 w-8 rounded-full'
-										src={avataPlaceholder}
+										src={user.current?.image || avataPlaceholder}
 										alt=''
 									></img>
-								</Link>
-
-								<div className='hidden group-hover:block absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
-									<Link
-										className='text-right hover:text-white hover:bg-primary block py-2 px-4'
-										to='/profile'
-									>
-										Profile
-									</Link>
-									<p className='text-right hover:text-white hover:bg-primary py-2 px-4 cursor-pointer'>
-										Log out
-									</p>
-								</div>
+								</button>
+								{user.current !== null && (
+									<div className='hidden group-hover:block absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+										<Link
+											className='text-right hover:text-white hover:bg-primary block py-2 px-4'
+											to={`/users/${user.current.username}`}
+										>
+											Profile
+										</Link>
+										<p
+											className='text-right hover:text-white hover:bg-primary py-2 px-4 cursor-pointer'
+											onClick={handleLogout}
+										>
+											Log out
+										</p>
+									</div>
+								)}
 							</div>
 						</div>
 					</div>

@@ -1,10 +1,9 @@
-import React from 'react'
 import { AiFillGithub } from 'react-icons/ai'
 import { FaDiscord, FaFacebookF } from 'react-icons/fa'
 
 function Footer() {
 	return (
-		<footer className='relative mt-4 md:mt-0 sm:fixed bg-white bottom-0 w-full'>
+		<footer className='relative mt-4 md:mt-0 md:fixed bg-white bottom-0 w-full'>
 			<div className='pb-5 md:pb-10 pt-5 mx-auto container px-2 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center md:items-end gap-2 md:gap-[2rem] h-full '>
 				<p className='font-semibold'>
 					Design & Develop by <span>PVTD</span>

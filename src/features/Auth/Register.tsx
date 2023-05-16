@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { unwrapResult } from '@reduxjs/toolkit'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
 import { AppDispatch } from '../../app/store'
 import Button from '../../components/common/Button'
@@ -11,7 +12,6 @@ import TextField from '../../components/hook-form/TextField'
 import { UserRegister } from '../../schema/user'
 import { passwordSchemaFactory } from '../../utils/user-yup-schema'
 import { handleRegister } from './userSlice'
-import { useNavigate } from 'react-router-dom'
 
 function RegisterPage() {
 	const dispatch = useDispatch<AppDispatch>()
@@ -22,6 +22,7 @@ function RegisterPage() {
 			.string()
 			.required('Email là bắt buộc.')
 			.email('Email không hợp lệ.'),
+		username: yup.string().required('Username là bắt buộc.'),
 		password: passwordSchemaFactory(),
 		confirmPassword: yup
 			.string()

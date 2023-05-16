@@ -8,14 +8,11 @@ import Button from '../../components/common/Button'
 import SwitchLoginRegister from '../../components/common/SwitchLoginRegister'
 import PasswordField from '../../components/hook-form/PasswordField'
 import TextField from '../../components/hook-form/TextField'
-import { UserLogin, UserRegister } from '../../schema/user'
-import { passwordSchemaFactory } from '../../utils/user-yup-schema'
-import { handleRegister } from './userSlice'
-import { useNavigate } from 'react-router-dom'
+import { UserLogin } from '../../schema/user'
+import { handleLogin } from './userSlice'
 
 function LoginPage() {
 	const dispatch = useDispatch<AppDispatch>()
-	const navigate = useNavigate()
 
 	const schema = yup.object({
 		email: yup
@@ -36,14 +33,15 @@ function LoginPage() {
 	async function handleSubmit(values: UserLogin) {
 		console.log(values)
 		try {
-			// const action = handleRegister(values)
-			// const resultRegister = await dispatch(action)
-			// // Dùng unwrapResult để lấy kết quả
-			// const user = unwrapResult(resultRegister)
-			// console.log('🚀 ~ file: Register.tsx:52 ~ handleSubmit ~ user:', user)
-			// navigate('/login')
+			const action = handleLogin(values)
+			const resultLogin = await dispatch(action)
+			// Dùng unwrapResult để lấy kết quả
+			const user = unwrapResult(resultLogin)
+
+			localStorage.setItem('guestToken', user.token)
+			localStorage.setItem('@user', JSON.stringify(user))
 		} catch (error) {
-			console.error('Fail to register: ', error)
+			console.error('Fail to login: ', error)
 		}
 	}
 

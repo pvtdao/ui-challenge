@@ -3,8 +3,12 @@ import './App.css'
 import { initiateAxios } from './api/initAxios'
 import Footer from './components/Footer'
 import Header from './components/Header'
+import ProtectedRoute from './components/ProtectedRoute'
 import LoginPage from './features/Auth/Login'
 import RegisterPage from './features/Auth/Register'
+import UserPage from './pages/User'
+import UserDetailPage from './pages/User/UserDetail'
+import UserEditPage from './pages/User/UserEdit'
 
 initiateAxios()
 
@@ -14,8 +18,46 @@ function App() {
 			<Header />
 			<div className='mt-16'>
 				<Routes>
-					<Route path='/register' element={<RegisterPage />} />
-					<Route path='/login' element={<LoginPage />} />
+					<Route
+						path='/register'
+						element={
+							<ProtectedRoute>
+								<RegisterPage />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path='/login'
+						element={
+							<ProtectedRoute>
+								<LoginPage />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path='/users'
+						element={
+							<ProtectedRoute>
+								<UserPage />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path='/users/:username'
+						element={
+							<ProtectedRoute>
+								<UserDetailPage />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path='/users/:username/edit'
+						element={
+							<ProtectedRoute>
+								<UserEditPage />
+							</ProtectedRoute>
+						}
+					/>
 				</Routes>
 			</div>
 			<Footer />
