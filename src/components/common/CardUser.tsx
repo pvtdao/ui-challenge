@@ -22,13 +22,13 @@ function CardUser({ user, handleDeleteUser }: CardUserPropsType) {
 			<div className='flex justify-center items-center'>
 				<div className='rounded-full w-[120px] h-[120px]'>
 					<img
-						className='rounded-full'
+						className='rounded-full w-full h-full object-cover'
 						src={user.image || avataPlaceholder}
 						alt={user.username}
 					/>
 				</div>
 			</div>
-			<h1 className='font-bold text-xl text-center line-clamp-1'>
+			<h1 className='font-bold mt-2 text-xl text-center line-clamp-1'>
 				{user.username}
 			</h1>
 			<p className='line-clamp-1 w-full mt-5 text-secondary'>

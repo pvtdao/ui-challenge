@@ -36,9 +36,6 @@ const userSlice = createSlice({
 		}
 	},
 	extraReducers: {
-		'user/register/fulfilled': (state, action) => {
-			state.current = action.payload
-		},
 		'user/login/fulfilled': (state, action) => {
 			state.current = action.payload
 		}

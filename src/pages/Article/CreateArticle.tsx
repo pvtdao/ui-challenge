@@ -90,7 +90,9 @@ function CreateArticle({ dataArticle }: CreateArticlePropsType) {
 
 	return (
 		<div className='pb-32'>
-			<h1 className='text-center text-2xl font-medium'>Create new articles</h1>
+			<h1 className='text-center text-2xl font-medium'>
+				{dataArticle ? 'Update articles' : 'Create new articles'}
+			</h1>
 			<FormProvider {...methods}>
 				<form
 					className='flex flex-col gap-3 mt-10 max-w-3xl mx-auto'
